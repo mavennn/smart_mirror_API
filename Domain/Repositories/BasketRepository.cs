@@ -6,9 +6,9 @@ using SmartMirror.Domain.Models;
 
 namespace SmartMirror.Domain.Repositories
 {
-    public class ConsultantRepository : RepositoryBase<Consultant>
+    public class BasketRepository : RepositoryBase<Basket>
     {
-        public ConsultantRepository(SmartMirrorDbContext context) : base(context)
+        public BasketRepository(SmartMirrorDbContext context) : base(context)
         {
 
         }

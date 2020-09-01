@@ -27,6 +27,16 @@ namespace SmartMirror
 
             services.AddMvc();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .SetIsOriginAllowed((host) => true)
+                .AllowAnyHeader()
+                .AllowAnyOrigin());
+            });
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             var container = new Container();
@@ -49,6 +59,8 @@ namespace SmartMirror
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseMvc(routes =>
                 routes.MapRoute(name: "default", template: "{controller}/{action=Index}/{id?}")

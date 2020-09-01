@@ -22,36 +22,120 @@ namespace SmartMirror.Controllers
         public IActionResult GetAll()
         {
 
-            var data = _uow.ProductsRepository.Items;
+            var products = _uow.ProductsRepository.Items;
 
-            return Json(data);
+            foreach (var product in products)
+            {
+                product.Sizes = _uow.SizeRepository.Items
+                                        .Where(s => s.ProductId == product.Id)
+                                        .Select(s => new Size
+                                        {
+                                            Name = s.Name,
+                                            ProductId = s.ProductId,
+                                            Id = s.Id,
+                                            EU = s.EU
+                                        }).ToList();
+
+                product.Images = _uow.ImagesRepository.Items.Where(img => img.ProductId == product.Id).Select(img => new Image
+                {
+                    Id = img.Id,
+                    Url = img.Url,
+                    ProductId = img.ProductId
+                }).ToList();
+
+                product.Category = _uow.CategoriesRepository.Items.Where(c => c.ProductId == product.Id).Select(c => new Category
+                {
+                    Name = c.Name,
+                    Id = c.Id,
+                    ProductId = c.ProductId
+                }).FirstOrDefault();
+            }
+
+            return Json(products);
+        }
+        [HttpGet("{barcode}")]
+        public IActionResult GetByBarcode(string barcode)
+        {
+            if (string.IsNullOrEmpty(barcode)) return Json(null);
+
+            // находим вещь в бд
+            var product = _uow.ProductsRepository.Items.Where(p => p.Barcode == barcode).FirstOrDefault();
+
+            if (product == null) return Json(null);
+            
+            product.Sizes = _uow.SizeRepository.Items
+                                        .Where(s => s.ProductId == product.Id)
+                                        .Select(s => new Size
+                                        {
+                                            Name = s.Name,
+                                            ProductId = s.ProductId,
+                                            Id = s.Id,
+                                            EU = s.EU
+                                        }).ToList();
+
+            product.Images = _uow.ImagesRepository.Items.Where(img => img.ProductId == product.Id).Select(img => new Image
+            {
+                Id = img.Id,
+                Url = img.Url,
+                ProductId = img.ProductId
+            }).ToList();
+
+            product.Category = _uow.CategoriesRepository.Items.Where(c => c.ProductId == product.Id).Select(c => new Category
+            {
+                Name = c.Name,
+                Id = c.Id,
+                ProductId = c.ProductId
+            }).FirstOrDefault();
+
+            return Json(product);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Product product)
+        public IActionResult CreateMany([FromBody] List<Product> products)
         {
-            var p = new Product()
+
+            if (products == null) return Json(null);
+            
+            foreach (var product in products)
             {
-                Name = "Кроссовки ZENDEN active",
-                Price = 29999,
-                VendorCode = "189-01MV-002TT",
-                Brand = "Zenden",
-                Sizes = new List<Size>()
+                var newProductId = Guid.NewGuid();
+
+                var p = new Product()
                 {
-                    new Size() { Name = "40", EU = "40" },
-                    new Size() { Name = "41", EU = "41" },
-                    new Size() { Name = "42", EU = "42" },
-                    new Size() { Name = "43", EU = "43" },
-                    new Size() { Name = "44", EU = "44" },
-                    new Size() { Name = "45", EU = "45" },
-                },
-                Barcode = "2345678754567",
-                Gender = GenderTypes.MALE
+                    Id = newProductId,
+                    Name = product.Name,
+                    Price = product.Price,
+                    VendorCode = product.VendorCode,
+                    Brand = product.Brand,
+                    Sizes = product.Sizes.Select(s => new Size
+                    {
+                        Id = Guid.NewGuid(),
+                        ProductId = newProductId,
+                        Name = s.Name
+                    }).ToList(),
+                    Barcode = product.Barcode,
+                    Gender = product.Gender,
+                    Category = new Category { 
+                        Name = product.Category.Name, 
+                        ProductId = newProductId, 
+                        Id = Guid.NewGuid() 
+                    },
+                    Images = product.Images.Select(img => new Image
+                    {
+                        Id = Guid.NewGuid(),
+                        Url = img.Url,
+                        ProductId = product.Id
+                    }).ToList()
+                };
 
+                _uow.ProductsRepository.Add(p);
+            }
+            
 
-            };
+            _uow.Commit();
+            
 
-            return Json(p);
+            return Json(true);
         }
 
     }

@@ -6,9 +6,10 @@ using SmartMirror.Domain.Models;
 
 namespace SmartMirror.Domain.Repositories
 {
-    public class RequestRepository : RepositoryBase<Request>
+    public class CategoriesRepository : RepositoryBase<Category>
     {
-        public RequestRepository(SmartMirrorDbContext context) : base(context)
+
+        public CategoriesRepository(SmartMirrorDbContext context) : base(context)
         {
 
         }

@@ -12,11 +12,11 @@ namespace SmartMirror.Domain.Repositories
         Task<int> CommitAsync();
 
         IRepository<Product> ProductsRepository { get; }
-        IRepository<Category> CategoryRepository { get; }
-        IRepository<Image> ImageRepository { get; }
         IRepository<Size> SizeRepository { get; }
-        IRepository<User> UserRepository { get; }
-        IRepository<Consultant> ConsultantRepository { get; }
-        IRepository<Request> RequestRepository { get; }
+        IRepository<Category> CategoriesRepository { get; }
+        IRepository<Image> ImagesRepository { get; }
+        IRepository<User> UsersRepository { get; }
+        IRepository<Basket> BasketRepository { get; set; }
+        IRepository<HistoryItem> HistoryRepository { get; set; }
     }
 }

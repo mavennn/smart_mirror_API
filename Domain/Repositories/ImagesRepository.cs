@@ -6,11 +6,11 @@ using SmartMirror.Domain.Models;
 
 namespace SmartMirror.Domain.Repositories
 {
-    public class ImageRepository : RepositoryBase<Image>
+    public class ImagesRepository : RepositoryBase<Image>
     {
-        public ImageRepository(SmartMirrorDbContext context) : base(context)
+        public ImagesRepository(SmartMirrorDbContext context) : base(context)
         {
-               
+
         }
     }
 }

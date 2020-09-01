@@ -10,8 +10,8 @@ using SmartMirror.Domain;
 namespace SmartMirror.Migrations
 {
     [DbContext(typeof(SmartMirrorDbContext))]
-    [Migration("20200829152757_addConsulants2")]
-    partial class addConsulants2
+    [Migration("20200901142952_addHistoryItems")]
+    partial class addHistoryItems
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,24 @@ namespace SmartMirror.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("SmartMirror.Domain.Models.Basket", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ProductId");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Basket");
+                });
+
             modelBuilder.Entity("SmartMirror.Domain.Models.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -28,25 +46,28 @@ namespace SmartMirror.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("Sex");
+                    b.Property<Guid>("ProductId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("SmartMirror.Domain.Models.Consultant", b =>
+            modelBuilder.Entity("SmartMirror.Domain.Models.HistoryItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<Guid>("ProductId");
 
-                    b.Property<int>("Status");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Consultants");
+                    b.ToTable("HistoryItems");
                 });
 
             modelBuilder.Entity("SmartMirror.Domain.Models.Image", b =>
@@ -54,7 +75,7 @@ namespace SmartMirror.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("ProductId");
+                    b.Property<Guid>("ProductId");
 
                     b.Property<string>("Url");
 
@@ -74,49 +95,17 @@ namespace SmartMirror.Migrations
 
                     b.Property<string>("Brand");
 
-                    b.Property<Guid?>("CategoryId");
+                    b.Property<int>("Gender");
 
                     b.Property<string>("Name");
 
                     b.Property<decimal>("Price");
 
-                    b.Property<string>("Sex");
-
-                    b.Property<Guid?>("UserId");
-
-                    b.Property<Guid?>("UserId1");
-
                     b.Property<string>("VendorCode");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
-
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("SmartMirror.Domain.Models.Request", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid?>("ConsultantId");
-
-                    b.Property<int>("Type");
-
-                    b.Property<Guid?>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConsultantId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("SmartMirror.Domain.Models.Size", b =>
@@ -128,7 +117,7 @@ namespace SmartMirror.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid?>("ProductId");
+                    b.Property<Guid>("ProductId");
 
                     b.HasKey("Id");
 
@@ -149,44 +138,41 @@ namespace SmartMirror.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("SmartMirror.Domain.Models.Image", b =>
+            modelBuilder.Entity("SmartMirror.Domain.Models.Basket", b =>
                 {
-                    b.HasOne("SmartMirror.Domain.Models.Product")
-                        .WithMany("ImagesUrls")
-                        .HasForeignKey("ProductId");
-                });
-
-            modelBuilder.Entity("SmartMirror.Domain.Models.Product", b =>
-                {
-                    b.HasOne("SmartMirror.Domain.Models.Category", "Category")
+                    b.HasOne("SmartMirror.Domain.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("CategoryId");
-
-                    b.HasOne("SmartMirror.Domain.Models.User")
-                        .WithMany("BasketItems")
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("SmartMirror.Domain.Models.User")
-                        .WithMany("HistoryItems")
-                        .HasForeignKey("UserId1");
-                });
-
-            modelBuilder.Entity("SmartMirror.Domain.Models.Request", b =>
-                {
-                    b.HasOne("SmartMirror.Domain.Models.Consultant", "Consultant")
-                        .WithMany()
-                        .HasForeignKey("ConsultantId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SmartMirror.Domain.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SmartMirror.Domain.Models.Category", b =>
+                {
+                    b.HasOne("SmartMirror.Domain.Models.Product")
+                        .WithOne("Category")
+                        .HasForeignKey("SmartMirror.Domain.Models.Category", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SmartMirror.Domain.Models.Image", b =>
+                {
+                    b.HasOne("SmartMirror.Domain.Models.Product")
+                        .WithMany("Images")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SmartMirror.Domain.Models.Size", b =>
                 {
-                    b.HasOne("SmartMirror.Domain.Models.Product")
+                    b.HasOne("SmartMirror.Domain.Models.Product", "Product")
                         .WithMany("Sizes")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

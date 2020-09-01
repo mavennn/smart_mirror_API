@@ -34,15 +34,11 @@ namespace SmartMirror.Domain
         }
 
         public virtual DbSet<Product> Products { get; set; }
-
         public virtual DbSet<Size> Sizes { get; set; }
-
         public virtual DbSet<Category> Categories { get; set; }
-
         public virtual DbSet<Image> Images { get; set; }
-        public virtual DbSet<User> Users{ get; set; }
-        public virtual DbSet<Consultant> Consultants { get; set; }
-        public virtual DbSet<Request> Requests { get; set; }
-
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Basket> Basket { get; set; }
+        public virtual DbSet<HistoryItem> HistoryItems { get; set; }
     }
 }

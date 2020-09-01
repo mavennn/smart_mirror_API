@@ -8,6 +8,9 @@ namespace SmartMirror.Domain.Repositories
 {
     public class UserRepository : RepositoryBase<User>
     {
-        public UserRepository(SmartMirrorDbContext context) : base(context) { }
+        public UserRepository(SmartMirrorDbContext context) : base(context)
+        {
+
+        }
     }
 }

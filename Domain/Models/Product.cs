@@ -14,8 +14,10 @@ namespace SmartMirror.Domain.Models
         public Product()
         {
             Sizes = new List<Size>();
-            ImagesUrls = new List<Image>();
         }
+
+        [Key]
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
@@ -30,10 +32,8 @@ namespace SmartMirror.Domain.Models
         public string Barcode { get; set; }
 
         public GenderTypes Gender { get; set; }
-
         public Category Category { get; set; }
-
-        public List<Image> ImagesUrls { get; set; }
+        public List<Image> Images { get; set; }
 
     }
 }
