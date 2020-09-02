@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartMirror.Domain;
 
 namespace SmartMirror.Migrations
 {
     [DbContext(typeof(SmartMirrorDbContext))]
-    partial class SmartMirrorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200902021323_addRequestProducts")]
+    partial class addRequestProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using SmartMirror.Domain.Models;
 using SmartMirror.Domain.Repositories;
+using SmartMirror.Domain.Enums;
 
 namespace SmartMirror.Controllers
 {
@@ -45,7 +46,7 @@ namespace SmartMirror.Controllers
             // если такой предмет уже есть в корзине
             if (existingItem != null)
             {
-                return Json("Уже есть в корзине");
+                return Json(AddToBasketStatus.ALREADY_EXISTS);
             }
 
             _uow.BasketRepository.Add(newBasketItem);
@@ -54,7 +55,7 @@ namespace SmartMirror.Controllers
 
             var result = _uow.BasketRepository.Items.Where(b => b.UserId.ToString() == userId && b.ProductId.ToString() == productId).FirstOrDefault();
 
-            return Json(result);
+            return Json(AddToBasketStatus.SUCCESS);
         }
 
         [HttpGet]
