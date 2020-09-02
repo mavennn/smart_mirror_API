@@ -18,6 +18,7 @@ namespace SmartMirror.Controllers
         {
         }
 
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -53,6 +54,8 @@ namespace SmartMirror.Controllers
 
             return Json(products);
         }
+
+
         [HttpGet("{barcode}")]
         public IActionResult GetByBarcode(string barcode)
         {
@@ -89,6 +92,7 @@ namespace SmartMirror.Controllers
 
             return Json(product);
         }
+
 
         [HttpPost]
         public IActionResult CreateMany([FromBody] List<Product> products)

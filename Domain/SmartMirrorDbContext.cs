@@ -40,5 +40,8 @@ namespace SmartMirror.Domain
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Basket> Basket { get; set; }
         public virtual DbSet<HistoryItem> HistoryItems { get; set; }
+        public virtual DbSet<Consultant> Consultants { get; set; }
+        public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<RequestProduct> RequestProducts { get; set; }
     }
 }

@@ -19,6 +19,10 @@ namespace SmartMirror.Domain.Repositories
         public IRepository<User> UsersRepository { get; }
         public IRepository<Basket> BasketRepository { get; set; }
         public IRepository<HistoryItem> HistoryRepository { get; set; }
+        public IRepository<Consultant> ConsultantsRepository { get; set; }
+        public IRepository<Request> RequestRepository { get; set; }
+
+        public IRepository<RequestProduct>  RequestProductRepository { get; set; }
 
         public UnitOfWork(SmartMirrorDbContext context)
         {
@@ -31,6 +35,9 @@ namespace SmartMirror.Domain.Repositories
             UsersRepository = new UserRepository(_context);
             BasketRepository = new BasketRepository(_context);
             HistoryRepository = new HistoryRepository(_context);
+            ConsultantsRepository = new ConsultantsRepository(_context);
+            RequestRepository  = new RequestsRepository(_context);
+            RequestProductRepository = new RequestProductsRepository(_context);
         }
 
     

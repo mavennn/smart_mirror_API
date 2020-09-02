@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartMirror.Domain;
 
 namespace SmartMirror.Migrations
 {
     [DbContext(typeof(SmartMirrorDbContext))]
-    partial class SmartMirrorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200901233221_addConsultant")]
+    partial class addConsultant
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,10 +131,6 @@ namespace SmartMirror.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("ConsulantId");
-
-                    b.Property<Guid?>("ConsultantId");
-
                     b.Property<int>("Status");
 
                     b.Property<DateTime?>("Time");
@@ -141,13 +139,7 @@ namespace SmartMirror.Migrations
 
                     b.Property<int>("Type");
 
-                    b.Property<Guid>("UserId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ConsultantId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Requests");
                 });
@@ -216,18 +208,6 @@ namespace SmartMirror.Migrations
                     b.HasOne("SmartMirror.Domain.Models.Request")
                         .WithMany("Products")
                         .HasForeignKey("RequestId");
-                });
-
-            modelBuilder.Entity("SmartMirror.Domain.Models.Request", b =>
-                {
-                    b.HasOne("SmartMirror.Domain.Models.Consultant", "Consultant")
-                        .WithMany()
-                        .HasForeignKey("ConsultantId");
-
-                    b.HasOne("SmartMirror.Domain.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SmartMirror.Domain.Models.Size", b =>

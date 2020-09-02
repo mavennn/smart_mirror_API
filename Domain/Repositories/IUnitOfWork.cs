@@ -18,5 +18,8 @@ namespace SmartMirror.Domain.Repositories
         IRepository<User> UsersRepository { get; }
         IRepository<Basket> BasketRepository { get; set; }
         IRepository<HistoryItem> HistoryRepository { get; set; }
+        IRepository<Consultant> ConsultantsRepository { get; set; }
+        IRepository<Request> RequestRepository { get; set; }
+        IRepository<RequestProduct>  RequestProductRepository { get; set; }
     }
 }

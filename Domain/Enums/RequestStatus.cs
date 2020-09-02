@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace SmartMirror.Domain.Enums
 {
-    public enum RequestType
+    public enum RequestStatus
     {
-        BRING_THING,
-        TAKE_TO_CHECKOUT,
-        COME_UP
+        OPEN,
+        IN_PROCCESS,
+        CLOSE
     }
 }
