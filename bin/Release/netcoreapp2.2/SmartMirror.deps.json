@@ -6,7 +6,7 @@
   "compilationOptions": {
     "defines": [
       "TRACE",
-      "DEBUG",
+      "RELEASE",
       "NETCOREAPP",
       "NETCOREAPP2_2"
     ],
@@ -14,7 +14,7 @@
     "platform": "",
     "allowUnsafe": false,
     "warningsAsErrors": false,
-    "optimize": false,
+    "optimize": true,
     "keyFile": "",
     "emitEntryPoint": true,
     "xmlDoc": false,
@@ -25,7 +25,6 @@
       "SmartMirror/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.App": "2.2.0",
-          "Microsoft.AspNetCore.SignalR.Core": "1.1.0",
           "Microsoft.NETCore.App": "2.2.0",
           "StructureMap.AspNetCore": "2.0.0"
         },

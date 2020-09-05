@@ -11,8 +11,8 @@ C:\Users\Administrator\source\repos\SmartMirror\obj\Debug\netcoreapp2.2\SmartMir
 C:\Users\Administrator\source\repos\SmartMirror\bin\Debug\netcoreapp2.2\SmartMirror.pdb
 C:\Users\Administrator\source\repos\SmartMirror\obj\Debug\netcoreapp2.2\SmartMirror.dll
 C:\Users\Administrator\source\repos\SmartMirror\obj\Debug\netcoreapp2.2\SmartMirror.pdb
-C:\Users\Administrator\source\repos\SmartMirror\obj\Debug\netcoreapp2.2\SmartMirror.csproj.CoreCompileInputs.cache
 C:\Users\Administrator\source\repos\SmartMirror\obj\Debug\netcoreapp2.2\SmartMirror.RazorAssemblyInfo.cache
 C:\Users\Administrator\source\repos\SmartMirror\obj\Debug\netcoreapp2.2\SmartMirror.RazorAssemblyInfo.cs
 C:\Users\Administrator\source\repos\SmartMirror\obj\Debug\netcoreapp2.2\SmartMirror.RazorTargetAssemblyInfo.cache
 C:\Users\Administrator\source\repos\SmartMirror\obj\Debug\netcoreapp2.2\SmartMirror.csprojAssemblyReference.cache
+C:\Users\Administrator\source\repos\SmartMirror\obj\Debug\netcoreapp2.2\SmartMirror.csproj.CoreCompileInputs.cache

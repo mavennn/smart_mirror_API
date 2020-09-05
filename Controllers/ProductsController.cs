@@ -23,6 +23,7 @@ namespace SmartMirror.Controllers
         public IActionResult GetAll()
         {
 
+            System.Diagnostics.Debug.WriteLine("sdfsdfdf");
             var products = _uow.ProductsRepository.Items;
 
             foreach (var product in products)

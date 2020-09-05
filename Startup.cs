@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using StructureMap;
 using SmartMirror.Domain;
 using SmartMirror.DependencyResolution;
+using SmartMirror.Hubs;
 
 namespace SmartMirror
 {
@@ -26,15 +27,15 @@ namespace SmartMirror
             services.AddDbContext<SmartMirrorDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMvc();
+            services.AddSignalR();
 
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
-                .AllowAnyMethod()
-                .AllowCredentials()
-                .SetIsOriginAllowed((host) => true)
-                .AllowAnyHeader()
-                .AllowAnyOrigin());
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowed((host) => true)
+                    .AllowCredentials());
             });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -55,12 +56,18 @@ namespace SmartMirror
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            app.UseCors("CorsPolicy");
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("CorsPolicy");
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<MainHub>("/hub");
+            });
 
             app.UseMvc(routes =>
                 routes.MapRoute(name: "default", template: "{controller}/{action=Index}/{id?}")
